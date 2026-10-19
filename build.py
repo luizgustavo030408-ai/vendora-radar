@@ -143,7 +143,9 @@ AUTH_JS = '''
     window.VR_ROLE = { socio: m.socio === "joao" ? "joao" : "luiz", nome: m.nome, papel: m.papel || "socio", chave: m.chave, ini: ini(m.nome) };
     window.__VR_DB = makeDb();
     $("auth").hidden = true;
-    const s = document.createElement("script"); s.src = "app.js?v=__V__"; s.onload = () => { $("boot").hidden = true; $("acctMail").textContent = email; }; document.body.appendChild(s);
+    const parts = __PARTS__; let n = 0;
+    const next = () => { if (n >= parts.length) { $("boot").hidden = true; $("acctMail").textContent = email; return; } const s = document.createElement("script"); s.src = parts[n++] + "?v=__V__"; s.onload = next; s.onerror = () => { $("boot").textContent = "Não foi possível carregar o Radar. Recarregue a página."; }; document.body.appendChild(s); };
+    next();
   }
 
   $("loginForm").addEventListener("submit", async ev => {
@@ -196,6 +198,22 @@ index = f'''<!doctype html>
 body = re.sub(r'^.*?(?=<div class="app">)', '', markup, flags=re.S)
 index += AUTH_HTML + "\n" + body + "\n<script>" + AUTH_JS.replace("__URL__", SUPABASE_URL).replace("__KEY__", SUPABASE_KEY).replace("__V__", V) + "</script>\n</body>\n</html>\n"
 
+# a app e dividida em partes (scripts classicos compartilham o escopo global)
+lines = app.split("\n")
+starts = [k for k, l in enumerate(lines) if re.match(r"^(function |async function |const |let |/\* -|document\.|window\.|if \(window\.Chart|\(async)", l)]
+chunks, cur, size, last = [], 0, 0, 0
+for k in starts:
+    seg = sum(len(x) + 1 for x in lines[last:k])
+    if size + seg > 24000 and size > 0:
+        chunks.append("\n".join(lines[cur:last])); cur, size = last, 0
+    size += seg; last = k
+chunks.append("\n".join(lines[cur:]))
+names = [f"js/a{n}.js" for n in range(len(chunks))]
+index = index.replace("__PARTS__", "[" + ",".join(f'"{x}"' for x in names) + "]")
+index = index.replace("<style>" + css + LOGIN_CSS + "</style>", '<link rel="stylesheet" href="style.css?v=' + V + '">')
+(DIST / "js").mkdir(exist_ok=True)
+for x in (DIST / "js").glob("*.js"): x.unlink()
+for nm, c in zip(names, chunks): (DIST / nm).write_text(c + "\n")
+(DIST / "style.css").write_text(css + LOGIN_CSS)
 (DIST / "index.html").write_text(index)
-(DIST / "app.js").write_text(app)
 print("ok", len(index), len(app))

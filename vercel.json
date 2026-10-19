@@ -10,7 +10,7 @@
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     },
-    { "source": "/app.js", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
+    { "source": "/(js/.*|style.css)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] },
     { "source": "/", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }
   ]
 }
