@@ -122,6 +122,10 @@ AUTH_JS = '''
         .subscribe();
       // rede de seguranca: recarrega ao voltar para a aba
       document.addEventListener("visibilitychange", () => { if (!document.hidden) { loadLeads().catch(() => {}); loadCfg().catch(() => {}); } });
+      window.addEventListener("focus", () => { loadLeads().catch(() => {}); });
+      window.addEventListener("online", () => { loadLeads().catch(() => {}); loadCfg().catch(() => {}); });
+      // garantia extra: confere o banco a cada 15 s com a aba aberta, mesmo se o tempo real cair
+      setInterval(() => { if (!document.hidden) { loadLeads().catch(() => {}); loadCfg().catch(() => {}); } }, 15000);
     }
     const leadsCol = {
       limit() { return leadsCol; },
