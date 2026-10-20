@@ -41,6 +41,8 @@ app = app[:boot_start] + '''(async () => {
   if (!db) return;
   db.collection("leads").limit(5000).onSnapshot(snap => { leads = snap.docs.map(d => ({ id: d.id, ...d.data() })); render(); }, () => toast("A lista parou de atualizar. Recarregue a página."));
   db.doc("config/busca").onSnapshot(snap => { config = snap.exists ? snap.data() : {}; render(); });
+  if (!isTraf()) db.doc("config/ia").onSnapshot(snap => { ia = snap.exists ? snap.data() : {}; if (view === "missao") renderAI(); });
+  if (window.__VR_AI) window.__VR_AI({ acao: "status" }).then(() => { aiOk = true; if (view === "missao") renderAI(); }, () => { aiOk = false; if (view === "missao") renderAI(); });
 })();
 '''
 _a = app.index('  const dl = window.claude ?'); old_dl = app[_a:app.index('\n}\n', _a) + 1]
@@ -90,7 +92,7 @@ AUTH_JS = '''
     const cache = new Map(); let leadCbs = [], cfgCbs = [], cfg = {};
     const snapLeads = () => ({ docs: [...cache.values()].map(r => ({ id: r.id, data: () => r.data })) });
     const emitLeads = () => leadCbs.forEach(cb => cb(snapLeads()));
-    const emitCfg = () => cfgCbs.forEach(cb => cb({ exists: !!cfg.busca, data: () => cfg.busca || {} }));
+    const emitCfg = () => cfgCbs.forEach(([id, cb]) => cb({ exists: !!cfg[id], data: () => cfg[id] || {} }));
     async function loadLeads() {
       let from = 0; const all = [];
       for (;;) { const { data, error } = await SB.from("leads").select("id,data").range(from, from + 999); if (error) throw error; all.push(...data); if (data.length < 1000) break; from += 1000; }
@@ -134,7 +136,7 @@ AUTH_JS = '''
     };
     return {
       collection: () => leadsCol,
-      doc(path) { const [t, id] = path.split("/"); return { update: d => patchDoc(t, id, d), set: d => setDoc(t, id, d), onSnapshot(cb) { cfgCbs.push(cb); start(); loadCfg().catch(() => {}); } }; }
+      doc(path) { const [t, id] = path.split("/"); return { update: d => patchDoc(t, id, d), set: d => setDoc(t, id, d), onSnapshot(cb) { cfgCbs.push([id, cb]); start(); loadCfg().catch(() => {}); } }; }
     };
   }
 
@@ -144,7 +146,13 @@ AUTH_JS = '''
     const email = session.user.email;
     const { data: m, error } = await SB.from("membros").select("email,socio,nome,papel,chave").ilike("email", email).maybeSingle();
     if (error || !m) { await SB.auth.signOut(); return showLogin("Este e-mail não tem acesso ao Vendora Radar."); }
-    window.VR_ROLE = { socio: m.socio === "joao" ? "joao" : "luiz", nome: m.nome, papel: m.papel || "socio", chave: m.chave, ini: ini(m.nome) };
+    window.__VR_AI = async body => {
+      const { data, error } = await SB.functions.invoke("vr-ai", { body });
+      if (error) { let code = "erro"; try { const j = await error.context.json(); code = j.error || code; } catch {} throw Object.assign(new Error(code), { code }); }
+      if (data && data.error) throw Object.assign(new Error(data.error), { code: data.error });
+      return data;
+    };
+    window.VR_ROLE = { socio: m.papel === "trafego" ? "trafego" : m.socio === "joao" ? "joao" : "luiz", nome: m.nome, papel: m.papel || "socio", chave: m.chave, ini: ini(m.nome) };
     window.__VR_DB = makeDb();
     $("auth").hidden = true;
     const parts = __PARTS__; let n = 0;

@@ -22,6 +22,7 @@
   --ink: #111322;
   --luiz: #5660F3;
   --joao: #111322;
+  --trafego: #0E9F94;
   --s-novo: #8C8FA0;
   --s-enviado: #3B82F6;
   --s-potencial: #D97706;
@@ -365,6 +366,27 @@ tbody tr.done .lead-name { color: var(--fg-2); }
   thead th, tbody td { padding: 11px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.vr-traf .socio-only { display: none !important; }
+.ai-box { border: 1px solid color-mix(in srgb, var(--brand) 30%, var(--line)); background: color-mix(in srgb, var(--brand) 5%, var(--surface)); border-radius: 14px; padding: 12px; display: grid; gap: 10px; }
+.ai-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ai-row input[type="text"] { flex: 1 1 200px; min-width: 0; background: var(--surface); border: 1px solid var(--line-2); border-radius: 10px; padding: 7px 11px; }
+.btn.ai { background: linear-gradient(135deg, #6A73FF, #4750E0); border-color: transparent; color: #fff; box-shadow: 0 6px 18px -8px var(--glow); }
+.btn.ai svg { width: 15px; height: 15px; }
+.btn[disabled] { opacity: .55; cursor: progress; }
+.ai-out { display: grid; gap: 8px; }
+.ai-out .preview { border: 1px dashed color-mix(in srgb, var(--brand) 45%, var(--line)); }
+.ai-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.ai-tag svg { width: 14px; height: 14px; flex: none; }
+.ai-tag { white-space: nowrap; font-size: .72rem; font-weight: 600; color: var(--brand-ink); display: inline-flex; gap: 6px; align-items: center; }
+.ai-list { display: grid; gap: 6px; max-height: 220px; overflow-y: auto; }
+.ai-item { display: flex; gap: 8px; align-items: flex-start; font-size: .84rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.ai-item span { flex: 1; white-space: pre-wrap; }
+.ai-item button { border: 0; background: transparent; color: var(--muted); font-size: .9rem; line-height: 1; padding: 2px 4px; }
+.ai-status { font-size: .76rem; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.ai-status.on { background: var(--ok-soft); color: var(--ok); }
+.ai-status.off { background: var(--warn-soft); color: var(--warn); }
+.switch input { width: 16px; height: 16px; accent-color: var(--brand); }
+.switch { display: inline-flex; align-items: center; gap: 8px; font-size: .84rem; color: var(--fg-2); cursor: pointer; }
 .months { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .months button { border: 1px solid var(--line-2); background: var(--surface); border-radius: 10px; padding: 6px 10px; font-size: .78rem; font-weight: 600; color: var(--fg-2); display: grid; text-align: center; min-width: 64px; text-transform: capitalize; }
 .months button small { font-size: .66rem; font-weight: 500; color: var(--muted); text-transform: none; }
@@ -377,7 +399,7 @@ tbody tr.done .lead-name { color: var(--fg-2); }
   --bg: #080914; --surface: #10122A; --surface-2: #161939; --line: #22264B; --line-2: #2E3363;
   --fg: #EEF0FF; --fg-2: #C5C8EC; --muted: #9195C2; --dim: #6A6E9C;
   --brand: #7078FF; --brand-2: #8A91FF; --brand-soft: #1E2152; --brand-ink: #B7BBFF; --ink: #EEF0FF;
-  --luiz: #7078FF; --joao: #E4E6F7; --joao-ink: #111322;
+  --luiz: #7078FF; --joao: #E4E6F7; --joao-ink: #111322; --trafego: #2DD4BF;
   --s-novo: #9599B5; --s-enviado: #5B9BFF; --s-potencial: #F5B544; --s-fechado: #8A91FF; --s-concluido: #3DD68C; --s-recusou: #FF6B6B;
   --ok: #3DD68C; --ok-soft: #10301F; --bad: #FF6B6B; --bad-soft: #3A1518; --warn: #F5B544; --warn-soft: #33270F;
   --shadow: 0 1px 2px rgba(0,0,0,.35);
@@ -477,6 +499,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--brand) 5%, var(--surfac
       <div class="nav-title">Sessões de captação</div>
       <a href="#luiz" data-nav="luiz"><span class="dot" style="background:var(--luiz)">LG</span>Luiz Gustavo<span class="count" id="navLuiz">0</span></a>
       <a href="#joao" data-nav="joao"><span class="dot" style="background:var(--joao)">JD</span>João Diniz<span class="count" id="navJoao">0</span></a>
+      <a href="#trafego" data-nav="trafego"><span class="dot" style="background:var(--trafego)">TR</span>Leads de tráfego<span class="count" id="navTrafego">0</span></a>
       <a href="#pipeline" data-nav="pipeline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></svg>Pipeline</a>
     </nav>
     <nav class="nav nav-group" aria-label="Sistema">
@@ -566,6 +589,20 @@ tbody tr:hover td { background: color-mix(in srgb, var(--brand) 5%, var(--surfac
       <!-- MISSÃO -->
       <section class="view" data-view="missao" hidden>
         <div class="grid g-2" id="missionCards"></div>
+        <div class="card" id="aiCard">
+          <div class="card-h"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8Z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"/></svg></span><div><h2>Assistente de mensagens (IA)</h2><p class="hsub">Ensine como a Vendora escreve. A IA usa isso para melhorar cada mensagem antes do envio.</p></div><div class="right"><span class="ai-status off" id="aiStatus">Verificando…</span></div></div>
+          <div class="card-b grid g-2" style="align-items:start">
+            <div style="display:grid;gap:12px">
+              <div class="field"><label for="aiRegras">Como as mensagens devem ser</label><textarea id="aiRegras" rows="9"></textarea></div>
+              <div class="ai-row"><button class="btn sm brand" type="button" id="aiSalvar">Salvar treino</button><label class="switch"><input type="checkbox" id="aiAuto"> Aprender sozinha com as mensagens que tiveram resposta</label></div>
+            </div>
+            <div style="display:grid;gap:14px">
+              <div class="field"><span class="lbl">Aprendizados <span class="lead-sub" id="aiAprCount"></span></span><div class="ai-row"><input id="aiNovoApr" type="text" placeholder="Ex.: não usar a palavra 'parceria'"><button class="btn sm" type="button" id="aiAddApr">Ensinar</button></div><div class="ai-list" id="aiApr"></div></div>
+              <div class="field"><span class="lbl">Mensagens aprovadas como exemplo <span class="lead-sub" id="aiExCount"></span></span><div class="ai-list" id="aiEx"></div></div>
+            </div>
+          </div>
+          <div class="card-b" style="padding-top:0"><div class="ai-box"><div class="ai-row"><span class="ai-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8Z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"/></svg>Fila de hoje</span><span class="lead-sub" id="aiFilaInfo" style="flex:1"></span><button class="btn sm ai" type="button" id="aiFila">Melhorar a fila com IA</button></div></div></div>
+        </div>
         <div class="card" id="followCard" hidden>
           <div class="card-h"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m9 15 2 2 4-4"/></svg></span><div><h2>Retornos para hoje</h2><p class="hsub">Leads em que vocês marcaram uma data para voltar a falar</p></div></div>
           <div class="table-wrap" style="padding-top:14px"><table><thead><tr><th>Empresa</th><th>Sócio</th><th>Etapa</th><th>Retornar em</th><th style="text-align:right">Ação</th></tr></thead><tbody id="followBody"></tbody></table></div>
@@ -685,6 +722,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--brand) 5%, var(--surfac
 const OWN = {
   luiz: { nome: "Luiz Gustavo", eu: "Luiz", ini: "LG", hex: "#5660F3", css: "var(--luiz)" },
   joao: { nome: "João Diniz", eu: "João", ini: "JD", hex: "#12A39B", css: "var(--joao)" },
+  trafego: { nome: "Leads de tráfego", eu: "time da Vendora", ini: "TR", hex: "#0E9F94", css: "var(--trafego)" },
 };
 const ST = [
   { k: "novo", l: "Para enviar", c: "var(--s-novo)", hex: "#8A8FA8" },
@@ -696,7 +734,7 @@ const ST = [
 ];
 const SMAP = Object.fromEntries(ST.map(s => [s.k, s]));
 const WON = new Set(["fechado", "concluido"]);
-const VIEWS = { dashboard: ["Dashboard", "Visão geral da captação e do faturamento"], missao: ["Missão do dia", "Meta diária de mensagens de cada sócio"], luiz: ["Leads · Luiz Gustavo", "Sessão de captação do Luiz"], joao: ["Leads · João Diniz", "Sessão de captação do João"], pipeline: ["Pipeline", "Acompanhamento de todos os leads por etapa"], faturamento: ["Faturamento", "Projetos vendidos e receita da Vendora"], config: ["Configurações", "Metas, abrangência da busca e faturamento"], leads: ["Leads", "Base completa de todos os leads captados pela Vendora"], contratos: ["Contratos", "Contrato e assinatura mensal de cada cliente"] };
+const VIEWS = { dashboard: ["Dashboard", "Visão geral da captação e do faturamento"], missao: ["Missão do dia", "Meta diária de mensagens de cada sócio"], luiz: ["Leads · Luiz Gustavo", "Sessão de captação do Luiz"], joao: ["Leads · João Diniz", "Sessão de captação do João"], pipeline: ["Pipeline", "Acompanhamento de todos os leads por etapa"], faturamento: ["Faturamento", "Projetos vendidos e receita da Vendora"], config: ["Configurações", "Metas, abrangência da busca e faturamento"], leads: ["Leads", "Base completa de todos os leads captados pela Vendora"], contratos: ["Contratos", "Contrato e assinatura mensal de cada cliente"], trafego: ["Leads de tráfego", "Clientes que chegam pelos anúncios"] };
 const UFS = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"];
 const PAG = { pendente: "Pagamento pendente", sinal: "Sinal recebido", pago: "Pago" };
 const PAGC = { pendente: "var(--s-recusou)", sinal: "var(--s-potencial)", pago: "var(--s-concluido)" };
@@ -707,8 +745,12 @@ const AS = { nenhuma: "Sem assinatura", ativa: "Ativa", pausada: "Pausada", canc
 const ASC = { nenhuma: "var(--s-novo)", ativa: "var(--s-concluido)", pausada: "var(--s-potencial)", cancelada: "var(--s-recusou)" };
 const ROLE = window.VR_ROLE || { papel: "socio" };
 const isCons = () => ROLE.papel === "consultora";
+const isTraf = () => ROLE.papel === "trafego";
+const TRAF_VIEWS = ["trafego", "pipeline"];
+if (isTraf() && ROLE.nome && !/^gestor/i.test(ROLE.nome)) OWN.trafego.eu = ROLE.nome.split(" ")[0];
 let ctFilter = "";
 const ICO = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const SPARK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8Z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8Z"/></svg>';
 const linkIco = ICO('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>');
 
 const $ = id => document.getElementById(id);
@@ -728,9 +770,9 @@ let view = "dashboard", sTab = "todos", qOwner = me, pOwner = "", sentRange = 14
 const charts = {};
 
 /* ---------- data helpers ---------- */
-const owner = l => (l.dono === "joao" ? "joao" : "luiz");
+const owner = l => (l.dono === "joao" ? "joao" : l.dono === "trafego" ? "trafego" : "luiz");
 const status = l => (SMAP[l.status] ? l.status : "novo");
-const val = l => Number(l.valor) || 0;
+const val = l => isTraf() ? 0 : Number(l.valor) || 0;
 const wonDate = l => l.fechadoEm || l.concluidoEm || (l.atualizadoEm || "").slice(0, 10);
 const personalize = (msg, o) => String(msg || "").replaceAll("{{eu}}", OWN[o].eu);
 const waLink = l => l.wa ? `https://wa.me/${String(l.wa).replace(/\D/g, "")}?text=${encodeURIComponent(personalize(l.mensagem, owner(l)))}` : null;
@@ -789,7 +831,7 @@ async function setStatus(l, s, opts = {}) {
   const ok = await patch(l.id, data);
   if (ok && !opts.silent) toast(`${l.nome}: ${SMAP[s].l}`, () => patch(l.id, { status: prev.status, enviadoEm: prev.enviadoEm, historico: hist.slice(0, -1) }));
   const focusField = (id, msg) => { if (openId !== l.id) openDrawer(l.id); setTimeout(() => { const i = $(id); if (i) { i.scrollIntoView({ block: "center", behavior: "smooth" }); i.focus(); } }, 150); toast(msg); };
-  if (ok && s === "fechado" && !val(l)) focusField("dValor", "Projeto fechado! Informe por quanto o site foi vendido.");
+  if (ok && s === "fechado" && !val(l) && !isTraf()) focusField("dValor", "Projeto fechado! Informe por quanto o site foi vendido.");
   else if (ok && s === "concluido" && !l.siteUrl) focusField("dSite", "Projeto concluído! Cole aqui o link do site do cliente.");
   else if (ok && s === "recusou" && !l.motivo) focusField("dMotivo", "Qual foi o motivo? Isso ajuda a melhorar a abordagem.");
 }
@@ -803,8 +845,9 @@ function sendLead(l) {
 function go(v) {
   if (!VIEWS[v]) v = "dashboard";
   if (isCons() && (v === "faturamento" || v === "config")) v = "dashboard";
+  if (isTraf() && !TRAF_VIEWS.includes(v)) v = "trafego";
   view = v;
-  const sec = (v === "luiz" || v === "joao") ? "session" : v;
+  const sec = (v === "luiz" || v === "joao" || v === "trafego") ? "session" : v;
   if (v === "leads") lPage = 0;
   document.querySelectorAll(".view").forEach(s => s.hidden = s.dataset.view !== sec);
   document.querySelectorAll("[data-nav]").forEach(a => { if (a.dataset.nav === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
@@ -820,7 +863,7 @@ function render() {
   renderNav();
   if (view === "dashboard") renderDashboard();
   if (view === "missao") renderMission();
-  if (view === "luiz" || view === "joao") renderSession(view);
+  if (view === "luiz" || view === "joao" || view === "trafego") renderSession(view);
   if (view === "pipeline") renderBoard();
   if (view === "leads") renderLeads();
   if (view === "faturamento") renderFinance();
@@ -833,6 +876,8 @@ function renderNav() {
   const k = today();
   $("navLuiz").textContent = leads.filter(l => owner(l) === "luiz" && status(l) === "novo").length;
   $("navJoao").textContent = leads.filter(l => owner(l) === "joao" && status(l) === "novo").length;
+  $("navTrafego").textContent = leads.filter(l => owner(l) === "trafego" && status(l) === "novo").length;
+  if (isTraf()) { document.querySelectorAll("[data-nav]").forEach(a => a.hidden = !TRAF_VIEWS.includes(a.dataset.nav)); document.querySelectorAll(".nav-title").forEach(t => t.hidden = true); $("goalCard").hidden = true; $("exportBtn").hidden = true; document.documentElement.classList.add("vr-traf"); }
   const left = Math.max(0, metaOf(me) - sentOn(me, k));
   $("navMissao").textContent = left;
   $("navLeads").textContent = leads.length;
@@ -840,7 +885,7 @@ function renderNav() {
   if (isCons()) document.querySelectorAll('[data-nav="faturamento"],[data-nav="config"]').forEach(a => a.hidden = true);
   document.querySelectorAll("[data-me]").forEach(b => b.setAttribute("aria-pressed", b.dataset.me === me));
   $("meAvatar").textContent = ROLE.ini || OWN[me].ini; $("meAvatar").style.background = OWN[me].css; $("meName").textContent = ROLE.nome || OWN[me].nome;
-  { const r = $("meRole"); if (r) r.textContent = isCons() ? "Consultora de vendas · leads do " + OWN[me].eu : "Sócio · Vendora Labs"; }
+  { const r = $("meRole"); if (r) r.textContent = isTraf() ? "Gestor de tráfego · Vendora Labs" : isCons() ? "Consultora de vendas · leads do " + OWN[me].eu : "Sócio · Vendora Labs"; }
   if (window.VR_ROLE) { const w = document.querySelector(".who:not(#acct)"); if (w) w.hidden = true; }
   { const d = new Date(), wd = d.toLocaleDateString("pt-BR", { weekday: "long" }).split("-")[0]; $("todayLabel").textContent = `${wd[0].toUpperCase() + wd.slice(1)}, ${d.getDate()} de ${d.toLocaleDateString("pt-BR", { month: "long" })}`; }
   const mm = k.slice(0, 7), revM = leads.filter(l => isWon(l) && (wonDate(l) || "").startsWith(mm)).reduce((a, l) => a + val(l), 0), metaFat = Number(config.metaFaturamento) || 0;
@@ -967,6 +1012,7 @@ function streak(o) { let s = 0, k = today(); if (sentOn(o, k) >= metaOf(o)) s++;
 
 function renderMission() {
   const k = today();
+  renderAI();
   renderFollowups();
   $("missionCards").innerHTML = ["luiz", "joao"].map(o => {
     const sent = sentOn(o, k), m = metaOf(o), left = Math.max(0, m - sent), q = leads.filter(l => owner(l) === o && status(l) === "novo").length;
@@ -996,7 +1042,7 @@ const bairro = l => { if (l.bairro) return l.bairro; const e = String(l.endereco
 function renderSession(o) {
   const L = leads.filter(l => owner(l) === o), k = today();
   const sentT = sentOn(o, k), m = metaOf(o), w = L.filter(isWon), r = w.reduce((a, l) => a + val(l), 0);
-  const kp = [["Missão de hoje", `${sentT}/${m}`, `${Math.max(0, m - sentT)} restantes`, true], ["Para enviar", L.filter(l => status(l) === "novo").length, "leads na fila"], ["Potenciais clientes", L.filter(l => status(l) === "potencial").length, "em conversa"], ["Faturado", brl(r), `${w.length} projeto${w.length === 1 ? "" : "s"} vendido${w.length === 1 ? "" : "s"}`]];
+  const kp = [["Missão de hoje", `${sentT}/${m}`, `${Math.max(0, m - sentT)} restantes`, true], ["Para enviar", L.filter(l => status(l) === "novo").length, "leads na fila"], ["Potenciais clientes", L.filter(l => status(l) === "potencial").length, "em conversa"], isTraf() ? ["Clientes fechados", w.length, `${L.filter(l => status(l) === "recusou").length} recusaram`] : ["Faturado", brl(r), `${w.length} projeto${w.length === 1 ? "" : "s"} vendido${w.length === 1 ? "" : "s"}`]];
   $("sessionKpis").innerHTML = kp.map(([t, v, f, dark]) => `<div class="card kpi ${dark ? "dark" : ""}"><div class="kpi-top"><span class="eyebrow">${t}</span>${dark ? `<span class="avatar" style="width:38px;height:38px;font-size:.78rem">${OWN[o].ini}</span>` : kIco(t)}</div><div class="kpi-val num">${v}</div><div class="kpi-foot">${f}</div></div>`).join("");
   const tabs = [["todos", "Todos", L.length], ...ST.map(s => [s.k, s.l, L.filter(l => status(l) === s.k).length])];
   $("sTabs").innerHTML = tabs.map(([kk, lb, n]) => `<button class="tab" role="tab" type="button" data-tab="${kk}" aria-selected="${sTab === kk}">${lb}<span class="n">${n}</span></button>`).join("");
@@ -1165,6 +1211,65 @@ function openContract(l) {
   if (ctSt(l) === "nenhum") patch(l.id, { ctStatus: "gerado", ctGeradoEm: today() });
 }
 
+/* ---------- assistente de mensagens (IA) ---------- */
+const IA_REGRAS = `- Comece cumprimentando pelo nome do negócio e se apresente logo: "Aqui é o {{eu}}, da Vendora".
+- Tom amigável, leve e humano, como alguém da região puxando conversa. Abrace a causa do cliente.
+- Elogie algo real do negócio: nota no Google, quantidade de avaliações, tempo de mercado, o bairro.
+- Postura de vitrine: não empurre venda, não fale de preço, deixe a porta aberta ("quando pensarem em ter um site... vai ser um prazer ajudar").
+- Curta: no máximo 4 parágrafos curtos e de 1 a 3 emojis.
+- Nunca use: "só passei pra me apresentar", "vou ser breve", "desculpa o incômodo", "é só falar que eu não chamo mais".
+- Termine pedindo para salvar o contato e desejando sucesso.`;
+let ia = {}, aiOk = null, aiBusy = false, aiSug = null;
+const iaRegras = () => ia.regras || IA_REGRAS;
+async function aiCall(body) { if (!window.__VR_AI) throw Object.assign(new Error("sem_ia"), { code: "sem_ia" }); return window.__VR_AI(body); }
+const leadCtx = l => ({ nome: l.nome, nicho: l.nicho, cidade: cityOf(l), uf: ufOf(l), bairro: bairro(l), nota: l.nota, avaliacoes: l.avaliacoes, presenca: l.presenca, info: l.info, instagram: l.instagram, origem: l.origem || "", trafego: owner(l) === "trafego" });
+async function saveIa(data) {
+  if (!db) return false; ia = { ...ia, ...data }; renderAI();
+  try { await db.doc("config/ia").update(data); return true; } catch { toast("Não foi possível salvar o treino da IA"); return false; }
+}
+const filaIa = () => leads.filter(l => owner(l) === qOwner && status(l) === "novo" && !l.iaEm).sort((a, b) => (b.pontos || 0) - (a.pontos || 0)).slice(0, Math.max(0, metaOf(qOwner) - sentOn(qOwner, today())));
+function renderAI() {
+  if (isTraf() || !$("aiCard")) return;
+  const st = $("aiStatus"); st.className = "ai-status " + (aiOk ? "on" : "off"); st.textContent = aiOk === null ? "Verificando…" : aiOk ? "IA ativa" : "Falta ativar a chave da IA";
+  if (document.activeElement !== $("aiRegras")) $("aiRegras").value = iaRegras();
+  $("aiAuto").checked = ia.autoAprender !== false;
+  const apr = ia.aprendizados || [], ex = ia.exemplos || [];
+  $("aiAprCount").textContent = apr.length ? `(${apr.length})` : "";
+  $("aiApr").innerHTML = apr.length ? apr.map((a, i) => `<div class="ai-item"><span>${esc(a.t)}</span><button type="button" data-aidel="apr" data-i="${i}" aria-label="Remover aprendizado">✕</button></div>`).join("") : '<p class="hint">Quando você disser à IA o que não gostou numa mensagem, isso vira um aprendizado aqui.</p>';
+  $("aiExCount").textContent = ex.length ? `(${ex.length})` : "";
+  $("aiEx").innerHTML = ex.length ? ex.map((x, i) => ({ x, i })).reverse().map(({ x, i }) => `<div class="ai-item"><span>${esc(x.texto)}</span><button type="button" data-aidel="ex" data-i="${i}" aria-label="Remover exemplo">✕</button></div>`).join("") : '<p class="hint">Nos detalhes de um lead, use "Ficou ótima" para guardar uma mensagem como exemplo.</p>';
+  const fila = filaIa();
+  if (!aiBusy) $("aiFilaInfo").textContent = fila.length ? `${fila.length} mensage${fila.length === 1 ? "m" : "ns"} na fila de ${OWN[qOwner].nome} ainda sem revisão da IA.` : `A fila de ${OWN[qOwner].nome} já foi revisada.`;
+  $("aiFila").disabled = !fila.length || !aiOk || aiBusy;
+}
+async function aiImprove(l, acao, pedido) {
+  const out = $("dAiOut"); if (!out) return;
+  out.hidden = false; out.innerHTML = '<p class="hint">A IA está escrevendo…</p>';
+  document.querySelectorAll("[data-ai]").forEach(b => b.disabled = true);
+  try {
+    const r = await aiCall({ acao, lead: leadCtx(l), mensagem: $("dMsg").value, pedido: pedido || "" });
+    aiSug = { id: l.id, texto: r.mensagem };
+    out.innerHTML = `<div class="ai-out"><span class="ai-tag">${SPARK}Sugestão da IA</span><div class="preview">${esc(personalize(r.mensagem, owner(l)))}</div><div class="ai-acts"><button class="btn sm brand" type="button" data-aiuse="usar">Usar esta</button>${isTraf() ? "" : '<button class="btn sm" type="button" data-aiuse="ex">Ficou ótima (guardar como exemplo)</button>'}<button class="btn sm" type="button" data-ai="melhorar">Gerar outra</button><button class="btn sm ghost" type="button" data-aiuse="ruim">Não gostei…</button></div></div>`;
+    aiOk = true;
+  } catch (e) {
+    const semChave = e && (e.code === "sem_chave" || e.code === "sem_ia");
+    if (semChave) aiOk = false;
+    out.innerHTML = `<p class="hint warn">${semChave ? "A IA ainda não foi ativada: falta colocar a chave da Anthropic no Supabase." : "Não consegui falar com a IA agora. Tente de novo em instantes."}</p>`;
+  }
+  document.querySelectorAll("[data-ai]").forEach(b => b.disabled = false);
+}
+async function aiFila() {
+  const fila = filaIa(); if (!fila.length) return;
+  aiBusy = true; renderAI(); let ok = 0;
+  for (const [n, l] of fila.entries()) {
+    $("aiFilaInfo").textContent = `Melhorando ${n + 1} de ${fila.length}: ${l.nome}…`;
+    try { const r = await aiCall({ acao: "melhorar", lead: leadCtx(l), mensagem: l.mensagem || "" }); if (r && r.mensagem) { await patch(l.id, { mensagem: r.mensagem, mensagemAnterior: l.mensagem || "", iaEm: new Date().toISOString() }); ok++; } }
+    catch (e) { if (e && (e.code === "sem_chave" || e.code === "sem_ia")) { aiOk = false; break; } }
+  }
+  aiBusy = false; renderAI();
+  toast(ok ? `${ok} mensage${ok === 1 ? "m melhorada" : "ns melhoradas"} pela IA. Dê uma olhada antes de enviar.` : "A IA não conseguiu revisar a fila agora.");
+}
+
 const cfgDraft = () => ({ abr: config.abrangencia || "brasil", ufs: [...(config.ufs || [])] });
 function renderConfig() {
   $("goalSettings").innerHTML = ["luiz", "joao"].map(o => `<div class="setting-row"><div style="display:flex;gap:10px;align-items:center"><span class="avatar" style="background:${OWN[o].css}">${OWN[o].ini}</span><div><b>${OWN[o].nome}</b><p>Mensagens por dia e leads novos que a busca entrega para ${OWN[o].eu}.</p></div></div>
@@ -1189,7 +1294,7 @@ function drawDrawer(l) {
     <div class="badges" id="dBadges"></div></div>
     <div class="dr-b">
       <div class="field"><span class="lbl">Etapa</span><div class="status-pick" id="dStatus">${ST.map(x => `<button type="button" data-set="${x.k}" style="--c:${x.c}" aria-pressed="${x.k === s}"><i style="background:${x.c}"></i>${x.l}</button>`).join("")}</div></div>
-      <div class="dr-sec"><h4>${ICO('<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>')}Projeto e pagamento</h4>
+      <div class="dr-sec socio-only"><h4>${ICO('<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>')}Projeto e pagamento</h4>
         <div class="form-grid">
           <div class="field"><label for="dValor">Valor do site vendido</label><div class="money"><span>R$</span><input id="dValor" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00" value="${moneyIn(val(l))}"></div></div>
           <div class="field"><label for="dPag">Pagamento</label><select id="dPag">${Object.entries(PAG).map(([k, t]) => `<option value="${k}"${(l.pagamento || "pendente") === k ? " selected" : ""}>${t}</option>`).join("")}</select></div>
@@ -1202,7 +1307,7 @@ function drawDrawer(l) {
         <div class="inline"><input id="dSite" type="url" inputmode="url" placeholder="https://www.sitedocliente.com.br" value="${esc(l.siteUrl || "")}" style="background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:9px 12px"><a class="btn sm" id="dSiteOpen" href="${esc(l.siteUrl || "#")}" target="_blank" rel="noopener"${l.siteUrl ? "" : " hidden"}>Abrir</a></div>
         <p class="hint" id="dSiteHint">${s === "concluido" && !l.siteUrl ? "Projeto concluído: cole o link do site entregue." : "Link do site que a Vendora entregou para esse cliente."}</p>
       </div>
-      <div class="dr-sec"><h4>${ICO('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>')}Contrato<span class="pill" id="dCtPill" style="margin-left:auto;--c:${CT[ctSt(l)][1]}">${CT[ctSt(l)][0]}</span></h4>
+      <div class="dr-sec socio-only"><h4>${ICO('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>')}Contrato<span class="pill" id="dCtPill" style="margin-left:auto;--c:${CT[ctSt(l)][1]}">${CT[ctSt(l)][0]}</span></h4>
         <div class="form-grid">
           <div class="field"><label for="dCtStatus">Situação</label><select id="dCtStatus">${Object.entries(CT).map(([k, [t]]) => `<option value="${k}"${ctSt(l) === k ? " selected" : ""}>${t}</option>`).join("")}</select></div>
           <div class="field"><label for="dCtData">Assinado em</label><input id="dCtData" type="date" value="${esc(l.ctAssinadoEm || "")}"></div>
@@ -1216,7 +1321,7 @@ function drawDrawer(l) {
         <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm brand" type="button" data-gen="${esc(l.id)}">Gerar contrato</button>${l.wa ? `<a class="btn sm" id="dCtSend" target="_blank" rel="noopener" data-stop="1" href="https://wa.me/${esc(String(l.wa).replace(/\D/g, ""))}?text=${encodeURIComponent("Oi! Segue o contrato do site pra você dar uma olhada e assinar. Qualquer dúvida é só me chamar 😊")}">${waIcon}Avisar no WhatsApp</a>` : ""}</div>
         <p class="hint">O contrato sai preenchido com os dados do cliente, o valor, o pagamento e a assinatura mensal. Salve como PDF e envie para assinar.</p>
       </div>
-      <div class="dr-sec"><h4>${ICO('<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>')}Assinatura mensal<span class="pill" id="dAsPill" style="margin-left:auto;--c:${asNow(l)[1]}">${esc(asNow(l)[0])}</span></h4>
+      <div class="dr-sec socio-only"><h4>${ICO('<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>')}Assinatura mensal<span class="pill" id="dAsPill" style="margin-left:auto;--c:${asNow(l)[1]}">${esc(asNow(l)[0])}</span></h4>
         <div class="form-grid">
           <div class="field"><label for="dAsStatus">Situação</label><select id="dAsStatus">${Object.entries(AS).map(([k, t]) => `<option value="${k}"${asSt(l) === k ? " selected" : ""}>${t}</option>`).join("")}</select></div>
           <div class="field"><label for="dAsValor">Mensalidade</label><div class="money"><span>R$</span><input id="dAsValor" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00" value="${moneyIn(asVal(l))}"></div></div>
@@ -1242,8 +1347,12 @@ function drawDrawer(l) {
       ${l.info || l.obs ? `<div class="field"><span class="lbl">Sobre a empresa</span><p style="margin:0;color:var(--fg-2)">${esc(l.info || "")}${l.info && l.obs ? "<br>" : ""}${l.obs ? `<span class="lead-sub">${esc(l.obs)}</span>` : ""}</p></div>` : ""}
       <div class="field"><span class="lbl">Prévia no WhatsApp</span><div class="preview" id="dPreview">${esc(msg)}</div></div>
       <div class="field"><label for="dMsg">Editar mensagem <span style="text-transform:none;letter-spacing:0;font-weight:500">({{eu}} vira o nome de quem envia)</span></label><textarea id="dMsg" rows="6">${esc(l.mensagem || "")}</textarea></div>
+      <div class="ai-box" id="dAi">
+        <div class="ai-row"><button class="btn sm ai" type="button" data-ai="melhorar">${SPARK}Melhorar com IA</button><input id="dAiPedido" type="text" placeholder="Pedir ajuste: mais curta, citar o Instagram, tom mais animado..." aria-label="Pedido de ajuste para a IA"><button class="btn sm" type="button" data-ai="ajustar">Ajustar</button></div>
+        <div id="dAiOut" hidden></div>
+      </div>
       <div class="form-grid">
-        <div class="field"><label for="dOwner">Sessão de</label><select id="dOwner"><option value="luiz"${o === "luiz" ? " selected" : ""}>Luiz Gustavo</option><option value="joao"${o === "joao" ? " selected" : ""}>João Diniz</option></select></div>
+        <div class="field"><label for="dOwner">Sessão de</label><select id="dOwner"${isTraf() ? " disabled" : ""}><option value="luiz"${o === "luiz" ? " selected" : ""}>Luiz Gustavo</option><option value="joao"${o === "joao" ? " selected" : ""}>João Diniz</option><option value="trafego"${o === "trafego" ? " selected" : ""}>Leads de tráfego</option></select></div>
         <div class="field"><label for="dPrio">Prioridade</label><select id="dPrio">${["Alta", "Média", "Baixa"].map(p => `<option${p === (l.prioridade || "Baixa") ? " selected" : ""}>${p}</option>`).join("")}</select></div>
       </div>
       <div class="field"><label for="dNotas">Anotações</label><textarea id="dNotas" rows="3" placeholder="O que respondeu, quando retomar, o que o cliente quer...">${esc(l.notas || "")}</textarea></div>
@@ -1281,6 +1390,23 @@ document.addEventListener("click", e => {
   if (t.dataset.stop) { e.stopPropagation(); return; }
   if (t.dataset.page) { lPage = Math.max(0, lPage + Number(t.dataset.page)); render(); document.querySelector("[data-view=leads] .card:last-child").scrollIntoView({ block: "start", behavior: "smooth" }); return; }
   if (t.dataset.nb) { nicheBy = t.dataset.nb; return render(); }
+  if (t.dataset.ai) { e.stopPropagation(); const l = leads.find(x => x.id === openId); if (l) aiImprove(l, t.dataset.ai === "ajustar" ? "ajustar" : "melhorar", t.dataset.ai === "ajustar" ? $("dAiPedido").value.trim() : ""); return; }
+  if (t.dataset.aiuse) {
+    e.stopPropagation(); const l = leads.find(x => x.id === openId); if (!l || !aiSug || aiSug.id !== l.id) return;
+    if (t.dataset.aiuse === "ruim") {
+      const why = prompt("O que não ficou bom? A IA vai levar isso em conta.");
+      if (why && why.trim()) { if (!isTraf()) saveIa({ aprendizados: [...(ia.aprendizados || []), { t: why.trim(), em: new Date().toISOString(), por: ROLE.nome || OWN[me].eu }].slice(-40) }).then(ok => ok && toast("Anotado. A IA vai lembrar disso.")); aiImprove(l, "ajustar", why.trim()); }
+      return;
+    }
+    const texto = aiSug.texto; $("dMsg").value = texto; $("dPreview").textContent = personalize(texto, owner(l));
+    patch(l.id, { mensagem: texto, mensagemAnterior: l.mensagem || "", iaEm: new Date().toISOString() }).then(ok => ok && toast("Mensagem atualizada"));
+    if (t.dataset.aiuse === "ex") saveIa({ exemplos: [...(ia.exemplos || []), { texto, nicho: l.nicho || "", em: new Date().toISOString() }].slice(-30) }).then(ok => ok && toast("Guardada como exemplo. A IA vai se inspirar nela."));
+    $("dAiOut").hidden = true; aiSug = null; return;
+  }
+  if (t.dataset.aidel) { const k = t.dataset.aidel === "apr" ? "aprendizados" : "exemplos"; const arr = [...(ia[k] || [])]; arr.splice(Number(t.dataset.i), 1); saveIa({ [k]: arr }); return; }
+  if (t.id === "aiSalvar") { saveIa({ regras: $("aiRegras").value.trim() || IA_REGRAS, autoAprender: $("aiAuto").checked }).then(ok => ok && toast("Treino salvo")); return; }
+  if (t.id === "aiAddApr") { const v = $("aiNovoApr").value.trim(); if (!v) return; saveIa({ aprendizados: [...(ia.aprendizados || []), { t: v, em: new Date().toISOString(), por: ROLE.nome || OWN[me].eu }].slice(-40) }).then(ok => { if (ok) { $("aiNovoApr").value = ""; toast("Ensinado"); } }); return; }
+  if (t.id === "aiFila") { aiFila(); return; }
   if (t.dataset.ctf !== undefined) { ctFilter = t.dataset.ctf; return render(); }
   if (t.dataset.gen) { e.stopPropagation(); const l = leads.find(x => x.id === t.dataset.gen); if (l) openContract(l); return; }
   if (t.dataset.signed) { e.stopPropagation(); const l = leads.find(x => x.id === t.dataset.signed); if (l) patch(l.id, { ctStatus: "assinado", ctAssinadoEm: today() }).then(ok => ok && toast(`Contrato de ${l.nome} assinado`)); return; }
@@ -1335,6 +1461,7 @@ document.addEventListener("change", e => {
   if (e.target.id === "dAsStatus" && l) { const v = e.target.value, extra = v === "ativa" && !l.asInicio ? { asInicio: today() } : {}; if (extra.asInicio && $("dAsInicio")) $("dAsInicio").value = extra.asInicio; patch(l.id, { asStatus: v, ...extra, ...(v === "cancelada" ? { asCanceladaEm: today() } : {}) }).then(ok => ok && toast(`Assinatura: ${AS[v]}`)); }
   if (e.target.id === "dAsValor" && l) { const v = parseMoney(e.target.value); e.target.value = moneyIn(v); patch(l.id, { asValor: v, ...(v && asSt(l) === "nenhuma" ? { asStatus: "ativa", asInicio: l.asInicio || today() } : {}) }).then(ok => { if (!ok) return; if (v && asSt(l) === "nenhuma") { const s = $("dAsStatus"); if (s) s.value = "ativa"; toast(`Assinatura ativa: ${brlFull(v)}/mês`); } else toast("Mensalidade salva"); }); }
   if (e.target.id === "dAsDia" && l) { const v = Math.min(28, Math.max(1, Number(e.target.value) || 10)); e.target.value = v; patch(l.id, { asDia: v }); }
+  if (e.target.id === "aiAuto") saveIa({ autoAprender: e.target.checked });
   if (e.target.id === "cMetaFat") e.target.value = moneyIn(parseMoney(e.target.value));
   if (e.target.id === "dMsg" && l) patch(l.id, { mensagem: e.target.value });
   if (e.target.id === "dNotas" && l) patch(l.id, { notas: e.target.value });
@@ -1351,6 +1478,7 @@ document.addEventListener("input", e => {
   if (e.target.id === "lSearch") { lPage = 0; render(); }
 });
 document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && (e.target.id === "dAiPedido" || e.target.id === "aiNovoApr")) { e.preventDefault(); (e.target.id === "dAiPedido" ? document.querySelector('[data-ai="ajustar"]') : $("aiAddApr")).click(); return; }
   if (e.key === "Escape") { if (!$("modal").hidden) $("modal").hidden = true; else if (openId) closeDrawer(); }
   if (e.key === "/" && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); $("gSearch").focus(); }
 });
@@ -1383,24 +1511,26 @@ function openAdd() {
       <div class="field"><label for="aCidade">Cidade</label><input id="aCidade" placeholder="Goiânia" value="Goiânia"></div>
       <div class="field"><label for="aUf">Estado</label><select id="aUf">${UFS.map(u => `<option${u === "GO" ? " selected" : ""}>${u}</option>`).join("")}</select></div>
       <div class="field"><label for="aInsta">Instagram (opcional)</label><input id="aInsta" placeholder="@empresa"></div>
-      <div class="field"><label for="aDono">Sessão de</label><select id="aDono"><option value="luiz"${me === "luiz" ? " selected" : ""}>Luiz Gustavo</option><option value="joao"${me === "joao" ? " selected" : ""}>João Diniz</option></select></div>
+      <div class="field"><label for="aDono">Sessão de</label><select id="aDono"${isTraf() ? " disabled" : ""}><option value="luiz"${me === "luiz" ? " selected" : ""}>Luiz Gustavo</option><option value="joao"${me === "joao" ? " selected" : ""}>João Diniz</option><option value="trafego"${me === "trafego" || view === "trafego" ? " selected" : ""}>Leads de tráfego</option></select></div>
+      <div class="field" id="aOrigemWrap"><label for="aOrigem">Origem do lead</label><select id="aOrigem"><option>Meta Ads (Instagram/Facebook)</option><option>Google Ads</option><option>Instagram orgânico</option><option>Indicação</option><option>Prospecção ativa</option><option>Outro</option></select></div>
       <div class="field full"><label for="aInfo">Sobre a empresa</label><textarea id="aInfo" rows="2" placeholder="Nota no Google, se tem Instagram, o que chamou atenção..."></textarea></div>
       <p class="lead-sub full" style="margin:0">A mensagem é gerada no padrão Vendora e você pode editar depois nos detalhes.</p>
       <div class="full" style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" type="button" id="addCancel">Cancelar</button><button class="btn brand" type="submit">Adicionar lead</button></div>
     </div></form>`;
   $("aNome").focus();
+  { const syncO = () => { $("aOrigemWrap").hidden = !(isTraf() || $("aDono").value === "trafego"); }; syncO(); $("aDono").onchange = syncO; }
   $("addClose").onclick = $("addCancel").onclick = () => $("modal").hidden = true;
   $("addForm").onsubmit = async ev => {
     ev.preventDefault(); if (!db) return toast("Sem conexão com o banco de dados");
     const nome = $("aNome").value.trim(), tel = $("aTel").value.trim(), dig = tel.replace(/\D/g, "").replace(/^0+/, "").replace(/^55(?=\d{10,11}$)/, "");
-    const nicho = $("aNicho").value.trim() || "negócio", b = $("aBairro").value.trim(), dono = $("aDono").value;
+    const nicho = $("aNicho").value.trim() || "negócio", b = $("aBairro").value.trim(), dono = isTraf() ? "trafego" : $("aDono").value, origem = $("aOrigem").value;
     const cel = dig.length === 11 && dig[2] === "9", cidade = $("aCidade").value.trim() || "Goiânia", uf = $("aUf").value;
     if (dig.length >= 10) { const dup = leads.find(x => String(x.wa || "").replace(/\D/g, "").endsWith(dig)); if (dup) return toast(`Esse telefone já está na base: ${dup.nome} (sessão de ${OWN[owner(dup)].eu})`); }
     const local = /goi[aâ]nia/i.test(cidade) ? "aqui de Goiânia" : "de todo o Brasil";
-    const msg = `Oi, pessoal da ${nome}, tudo bem? 😊\n\nAqui é o {{eu}}, da Vendora. Eu crio sites pra negócios ${local} e acabei encontrando vocês${b ? ` no ${b}` : ""}${local !== "aqui de Goiânia" ? `, em ${cidade}` : ""}.\n\nQuando pensarem em ter um site pra mostrar o trabalho de vocês, vai ser um prazer ajudar. Salva meu contato aí! Sucesso pra vocês 🙌`;
+    const msg = dono === "trafego" ? `Oi, pessoal da ${nome}, tudo bem? 😊\n\nAqui é o {{eu}}, da Vendora. Vi que vocês se interessaram pelo nosso anúncio e quis chamar pra entender melhor o que vocês procuram.\n\nMe conta um pouco do negócio de vocês? Assim eu já penso no melhor caminho pro site 🙌` : `Oi, pessoal da ${nome}, tudo bem? 😊\n\nAqui é o {{eu}}, da Vendora. Eu crio sites pra negócios ${local} e acabei encontrando vocês${b ? ` no ${b}` : ""}${local !== "aqui de Goiânia" ? `, em ${cidade}` : ""}.\n\nQuando pensarem em ter um site pra mostrar o trabalho de vocês, vai ser um prazer ajudar. Salva meu contato aí! Sucesso pra vocês 🙌`;
     const id = "manual-" + nome.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) + "-" + Date.now().toString(36);
     try {
-      await db.collection("leads").doc(id).set({ nome, nicho, telefone: tel, wa: dig.length >= 10 ? "55" + dig : null, tipo: cel ? "Celular" : "Fixo", nota: null, avaliacoes: 0, presenca: "Sem site", endereco: `${b ? b + ", " : ""}${cidade} - ${uf}`, bairro: b, cidade, uf, instagram: $("aInsta").value.trim(), maps: "", mensagem: msg, info: $("aInfo").value.trim(), pontos: cel ? 45 : 20, prioridade: "Média", status: "novo", dono, capturadoEm: today(), atualizadoEm: new Date().toISOString(), historico: [], valor: 0, notas: "", obs: "Cadastrado manualmente" });
+      await db.collection("leads").doc(id).set({ nome, nicho, telefone: tel, wa: dig.length >= 10 ? "55" + dig : null, tipo: cel ? "Celular" : "Fixo", nota: null, avaliacoes: 0, presenca: "Sem site", endereco: `${b ? b + ", " : ""}${cidade} - ${uf}`, bairro: b, cidade, uf, instagram: $("aInsta").value.trim(), maps: "", mensagem: msg, info: $("aInfo").value.trim(), pontos: cel ? 45 : 20, prioridade: "Média", status: "novo", dono, capturadoEm: today(), atualizadoEm: new Date().toISOString(), historico: [], valor: 0, notas: "", obs: dono === "trafego" ? "Lead de tráfego · " + origem : "Cadastrado manualmente", ...(dono === "trafego" ? { origem } : {}) });
       $("modal").hidden = true; toast(`${nome} adicionado à sessão de ${OWN[dono].eu}`);
     } catch { toast("Não foi possível adicionar o lead"); }
   };
